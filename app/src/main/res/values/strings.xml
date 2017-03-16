@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Meetly</string>
+    <string name="app_slogan">Reuniões Simplificadas</string>
+    <string name="navigation_drawer_open">Abrir navegação</string>
+    <string name="navigation_drawer_close">Fechar navegação</string>
+    <string name="action_settings">Opções</string>
+    <string name="no_account">Sem conta? Crie uma!</string>
+
+    <!-- MENU'S  -->
+    <string name="nav_app_home">Início</string>
+    <string name="nav_archived">Arquivadas</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="nav_logout">Sair</string>
+    <string name="nav_header_user">User</string>
+    <string name="nav_header_mail">user@mail.com</string>
+
+    <!-- ACTIVITIES -->
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_home">Início</string>
+    <string name="title_activity_test">Test</string>
+
+
+</resources>

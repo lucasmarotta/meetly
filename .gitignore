@@ -1,0 +1,13 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/layout/images
+/layout/Cópia_de_segurança_de_Meetly.cdr
+/layout/icons/*
+!/layout/icons/meetly_icons.json

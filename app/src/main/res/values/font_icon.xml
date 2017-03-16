@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="font_icon">meetly-icons.ttf</string>
+
+    <!-- YOUR ICON DEFITION HERE -->
+    <string name="icon_accept">&#xe900;</string>
+    <string name="icon_arrow_down">&#xe901;</string>
+    <string name="icon_arrow_left">&#xe902;</string>
+    <string name="icon_arrow_right">&#xe903;</string>
+    <string name="icon_arrow_up">&#xe904;</string>
+    <string name="icon_asterisk">&#xe905;</string>
+    <string name="icon_attachment">&#xe906;</string>
+    <string name="icon_calendar">&#xe907;</string>
+    <string name="icon_check">&#xe908;</string>
+    <string name="icon_clock">&#xe014;</string>
+    <string name="icon_cog">&#xe909;</string>
+    <string name="icon_cross">&#xe90a;</string>
+    <string name="icon_description">&#xe90b;</string>
+    <string name="icon_down">&#xe90c;</string>
+    <string name="icon_download">&#xe90d;</string>
+    <string name="icon_edit">&#xe90e;</string>
+    <string name="icon_eye">&#xe90f;</string>
+    <string name="icon_globe">&#xe078;</string>
+    <string name="icon_heart">&#xe910;</string>
+    <string name="icon_home">&#xe911;</string>
+    <string name="icon_image">&#xe912;</string>
+    <string name="icon_info">&#xe913;</string>
+    <string name="icon_left">&#xe914;</string>
+    <string name="icon_location">&#xe924;</string>
+    <string name="icon_logout">&#xe915;</string>
+    <string name="icon_map">&#xe925;</string>
+    <string name="icon_meeting">&#xe916;</string>
+    <string name="icon_organization">&#xe917;</string>
+    <string name="icon_plus">&#xe918;</string>
+    <string name="icon_presentation">&#xe021;</string>
+    <string name="icon_refresh">&#xe919;</string>
+    <string name="icon_right">&#xe91a;</string>
+    <string name="icon_search">&#xe91b;</string>
+    <string name="icon_settings">&#xe91c;</string>
+    <string name="icon_share">&#xe926;</string>
+    <string name="icon_stack_2">&#xe91d;</string>
+    <string name="icon_star">&#xe91e;</string>
+    <string name="icon_tag">&#xe91f;</string>
+    <string name="icon_trash">&#xe920;</string>
+    <string name="icon_up">&#xe921;</string>
+    <string name="icon_upload">&#xe922;</string>
+    <string name="icon_user">&#xe923;</string>
+</resources>
