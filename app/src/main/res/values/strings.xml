@@ -34,6 +34,11 @@
     <string name="form_company_hint">Companhia (Opcional)</string>
     <string name="form_role_hint">Cargo (Opcional)</string>
 
+    <string name="form_title_hint">Título</string>
+    <string name="form_subject_hint">Assunto</string>
+    <string name="form_date_hint">Data</string>
+    <string name="form_time_hint">Horário</string>
+
     <!-- FORM VALIDATION -->
 
 </resources>
