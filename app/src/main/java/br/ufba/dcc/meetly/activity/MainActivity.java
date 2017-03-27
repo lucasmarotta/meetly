@@ -1,6 +1,8 @@
 package br.ufba.dcc.meetly.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,7 +18,6 @@ import android.view.MenuItem;
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.fragment.ArchivedFragment;
 import br.ufba.dcc.meetly.fragment.HomeFragment;
-import br.ufba.dcc.meetly.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private FragmentManager mFragmentManager;
+    private Menu menu;
 
     /**
      * Initialize Activity
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_options_main, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_menu_settings) {
             return true;
         }
 
@@ -114,9 +117,10 @@ public class MainActivity extends AppCompatActivity
      */
     public void goProfileAction(MenuItem item)
     {
-        mFragmentManager.beginTransaction().replace(R.id.content_frame_main, new ProfileFragment()).commit();
-        item.setChecked(true);
+        item.setChecked(false);
         mDrawerLayout.closeDrawer(GravityCompat.START);
+        Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -136,6 +140,9 @@ public class MainActivity extends AppCompatActivity
      */
     public void logoutAction(MenuItem item)
     {
+        SharedPreferences.Editor editor = getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE).edit();
+        editor.putString("email",null);
+        editor.apply();
         Intent intent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
     }

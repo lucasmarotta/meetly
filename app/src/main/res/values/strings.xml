@@ -3,7 +3,6 @@
     <string name="app_slogan">Reuniões Simplificadas</string>
     <string name="navigation_drawer_open">Abrir navegação</string>
     <string name="navigation_drawer_close">Fechar navegação</string>
-    <string name="action_settings">Opções</string>
     <string name="no_account">Sem conta? Crie uma!</string>
 
     <!-- MENU'S  -->
@@ -14,10 +13,27 @@
     <string name="nav_header_user">User</string>
     <string name="nav_header_mail">user@mail.com</string>
 
+    <!-- ACTION MENU'S  -->
+
+    <string name="action_menu_settings">Opções</string>
+    <string name="action_menu_search">Buscar</string>
+    <string name="action_menu_save">Salvar</string>
+
     <!-- ACTIVITIES -->
     <string name="title_activity_login">Login</string>
     <string name="title_activity_home">Início</string>
     <string name="title_activity_test">Test</string>
+    <string name="title_activity_profile">Perfil</string>
 
+    <!-- FORMS -->
+    <string name="form_email_hint">Email</string>
+    <string name="form_pass_hint">Senha</string>
+    <string name="form_pass_confirmation_hint">Confirme Senha</string>
+    <string name="form_name_hint">Nome</string>
+    <string name="form_phone_hint">Telefone (Opcional)</string>
+    <string name="form_company_hint">Companhia (Opcional)</string>
+    <string name="form_role_hint">Cargo (Opcional)</string>
+
+    <!-- FORM VALIDATION -->
 
 </resources>

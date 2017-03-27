@@ -30,10 +30,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/iab_margin"
         android:clickable="true"
-        android:tint="@color/colorWhite"
+        android:tint="@color/colorAltPrimaryDark"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_plus"
-        app:backgroundTint="@color/colorAltPrimary" />
+        app:srcCompat="@drawable/ic_plus" />
 
     <!--
     <net.codecrafting.fonticon.view.FontIconActionButton
