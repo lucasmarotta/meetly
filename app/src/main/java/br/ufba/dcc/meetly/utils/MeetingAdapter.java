@@ -16,6 +16,7 @@
 
 package br.ufba.dcc.meetly.utils;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -24,6 +25,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +44,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
     private ArrayList<MeetingModel> meetingItems;
     private SessionHelper session;
+    private Context context;
+    private int lastPosition = -1;
 
 
     /**
@@ -112,9 +117,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     /**
      * Initialize MeetingAdapter
      */
-    public MeetingAdapter(ArrayList<MeetingModel> meetingItems)
+    public MeetingAdapter(Context context, ArrayList<MeetingModel> meetingItems)
     {
+        this.context = context;
         this.meetingItems = meetingItems;
+        session = new SessionHelper(context);
     }
 
     /**
@@ -138,15 +145,12 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position)
     {
-        if(session == null) {
-            session = new SessionHelper(viewHolder.getItemView().getContext());
-        }
         UserModel user = session.getSessionUser();
         MeetingModel meeting = meetingItems.get(position);
         if(meeting.getColor() != null) {
             viewHolder.getItemTag().setBackgroundColor(Color.parseColor(meeting.getColor()));
         } else {
-            viewHolder.getItemTag().setBackgroundColor(ContextCompat.getColor(viewHolder.getItemView().getContext(),R.color.md_blue_grey_500));
+            viewHolder.getItemTag().setBackgroundColor(ContextCompat.getColor(context,R.color.md_blue_grey_500));
         }
         viewHolder.getItemTitle().setText(meeting.getTitle());
         viewHolder.getItemDate().setText(meeting.getDateBySqlDate());
@@ -158,8 +162,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             viewHolder.getItemShared().setVisibility(View.VISIBLE);
         }
 
-        viewHolder.getItemLocation().setText(meeting.getAddressName());
+        viewHolder.getItemLocation().setText(meeting.getAddressState()+", "+meeting.getAddressCity()+", "+meeting.getAddressName());
         bindElementsEvents(viewHolder,meeting);
+        setAnimation(viewHolder.getItemView(),position);
     }
 
     /**
@@ -175,16 +180,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     /**
      * Bind Events to Meeting Item elements
      * @param viewHolder ViewHolder holder
-     * @param meetingModel MeetingModel meeting model from position
+     * @param meeting MeetingModel meeting model from position
      */
-    public void bindElementsEvents(final ViewHolder viewHolder, final MeetingModel meetingModel)
+    public void bindElementsEvents(final ViewHolder viewHolder, final MeetingModel meeting)
     {
         //Abre o Mapa
         viewHolder.getItemLocation().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q="+meetingModel.getAddressName()));
+                String mapLocation = "Brasil, "+meeting.getAddressState()+", "+meeting.getAddressCity()+", "+meeting.getAddressName();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q="+mapLocation));
                 viewHolder.getItemView().getContext().startActivity(intent);
             }
         });
@@ -196,5 +202,16 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
             }
         });
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 }

@@ -45,11 +45,82 @@ public class HomeFragment extends android.support.v4.app.Fragment
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
-        mAdapter = new MeetingAdapter(meetingItems);
+        ArrayList<MeetingModel> meetingItems = simulateMeetings();
+
+        mAdapter = new MeetingAdapter(context, meetingItems);
         mRecyclerView.setAdapter(mAdapter);
 
 
         return mHomeView;
+    }
+
+    //Remover depois, só pra testar
+    private ArrayList<MeetingModel> simulateMeetings()
+    {
+        ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
+        MeetingModel m = new MeetingModel();
+        m.setTitle("Novo Produto");
+        m.setDate("2017-3-15");
+        m.setTime("12:45");
+        m.setAddressState("Bahia");
+        m.setAddressCity("Salvador");
+        m.setAddressName("Rua Ceará 121");
+        m.setUserId(2);
+        meetingItems.add(m);
+        m = new MeetingModel();
+        m.setTitle("Novo Produto");
+        m.setTime("12:45");
+        m.setDate("2017-3-15");
+        m.setAddressState("Bahia");
+        m.setAddressCity("Salvador");
+        m.setAddressName("Rua Ceará 121");
+        m.setUserId(1);
+        meetingItems.add(m);
+        m = new MeetingModel();
+        m.setTitle("Novo Produto");
+        m.setTime("12:45");
+        m.setDate("2017-3-15");
+        m.setAddressState("Bahia");
+        m.setAddressCity("Salvador");
+        m.setAddressName("Rua Ceará 121");
+        m.setUserId(2);
+        meetingItems.add(m);
+        m = new MeetingModel();
+        m.setTitle("Novo Produto");
+        m.setTime("12:45");
+        m.setDate("2017-3-15");
+        m.setAddressState("Bahia");
+        m.setAddressCity("Salvador");
+        m.setAddressName("Rua Ceará 121");
+        m.setUserId(2);
+        meetingItems.add(m);
+        m = new MeetingModel();
+        m.setTitle("Novo Produto");
+        m.setTime("12:45");
+        m.setDate("2017-3-15");
+        m.setAddressState("Bahia");
+        m.setAddressCity("Salvador");
+        m.setAddressName("Rua Ceará 121");
+        m.setUserId(2);
+        meetingItems.add(m);
+        m = new MeetingModel();
+        m.setTitle("Novo Produto");
+        m.setTime("12:45");
+        m.setDate("2017-3-15");
+        m.setAddressState("Bahia");
+        m.setAddressCity("Salvador");
+        m.setAddressName("Rua Ceará 121");
+        m.setUserId(2);
+        meetingItems.add(m);
+        m = new MeetingModel();
+        m.setTitle("Novo Produto");
+        m.setTime("12:45");
+        m.setDate("2017-3-15");
+        m.setAddressState("Bahia");
+        m.setAddressCity("Salvador");
+        m.setAddressName("Rua Ceará 121");
+        m.setUserId(2);
+        meetingItems.add(m);
+        return meetingItems;
     }
 }
