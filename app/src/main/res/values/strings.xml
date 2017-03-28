@@ -22,8 +22,9 @@
     <!-- ACTIVITIES -->
     <string name="title_activity_login">Login</string>
     <string name="title_activity_home">Início</string>
-    <string name="title_activity_test">Test</string>
     <string name="title_activity_profile">Perfil</string>
+    <string name="title_activity_meeting">Criar Reunião</string>
+    <string name="title_fragment_archived">Arquivadas</string>
 
     <!-- FORMS -->
     <string name="form_email_hint">Email</string>

@@ -24,6 +24,7 @@ public class HomeFragment extends android.support.v4.app.Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         mHomeView = inflater.inflate(R.layout.view_home, container, false);
+        getActivity().setTitle(getResources().getString(R.string.title_activity_home));
         return mHomeView;
     }
 }

@@ -24,6 +24,7 @@ public class ArchivedFragment extends android.support.v4.app.Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         mArchivedView = inflater.inflate(R.layout.view_archived, container, false);
+        getActivity().setTitle(getResources().getString(R.string.title_fragment_archived));
         return mArchivedView;
     }
 }
