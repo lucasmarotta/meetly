@@ -24,6 +24,7 @@ public class MeetingModel extends BaseModel
     private String room;
     private String floor;
     private String subject;
+    private String color;
     private static final String INPUT_DATE_FORMAT = "dd/MM/yyyy";
     private static final String SQL_DATE_FORMAT = "yyyy-MM-dd";
 
@@ -82,16 +83,19 @@ public class MeetingModel extends BaseModel
         return null;
     }
 
-    public void setDateBySqlDate(String sqlDate)
+    public String getDateBySqlDate()
     {
-        try {
-            SimpleDateFormat dateParser = new SimpleDateFormat(INPUT_DATE_FORMAT);
-            Date dt = dateParser.parse(sqlDate);
-            SimpleDateFormat dateFormatter = new SimpleDateFormat(SQL_DATE_FORMAT);
-            date = dateFormatter.format(dt);
-        } catch (Exception e) {
-            Log.e(TAG,e.getMessage());
+        if(date != null) {
+            try {
+                SimpleDateFormat dateParser = new SimpleDateFormat(SQL_DATE_FORMAT);
+                Date dt = dateParser.parse(date);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat(INPUT_DATE_FORMAT);
+                return dateFormatter.format(dt);
+            } catch (Exception e) {
+                Log.e(TAG,e.getMessage());
+            }
         }
+        return null;
     }
 
     public String getTime()
@@ -204,6 +208,16 @@ public class MeetingModel extends BaseModel
         this.subject = subject;
     }
 
+    public String getColor()
+    {
+        return color;
+    }
+
+    public void setColor(String color)
+    {
+        this.color = color;
+    }
+
     @Override
     public Integer getPrimaryKey()
     {
@@ -222,7 +236,7 @@ public class MeetingModel extends BaseModel
         ContentValues values = new ContentValues();
         values.put("title",title);
         values.put("subject",subject);
-        values.put("user_id", userId);
+        values.put("user_id",userId);
         values.put("date",date);
         values.put("time",time);
         return values;

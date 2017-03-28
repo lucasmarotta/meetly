@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
             } else {
-                showDialog("Aviso","Email e/ou incorretos.");
+                showDialog("Aviso","Email e/ou senha incorretos.");
             }
         } else {
             showDialog("Aviso","Existem erros no formulário que requer sua atenção.");
