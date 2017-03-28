@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.activity.MainActivity;
+import br.ufba.dcc.meetly.dao.MeetingDAO;
 import br.ufba.dcc.meetly.models.MeetingModel;
 import br.ufba.dcc.meetly.utils.MeetingAdapter;
 
@@ -24,6 +25,7 @@ public class HomeFragment extends android.support.v4.app.Fragment
     private RecyclerView mRecyclerView;
     private MeetingAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private MeetingDAO meetingDAO;
 
     /**
      * Load Home view to the fragment
@@ -40,13 +42,13 @@ public class HomeFragment extends android.support.v4.app.Fragment
         mainActivity = (MainActivity) getActivity();
         context = mHomeView.getContext();
         mainActivity.setTitle(getResources().getString(R.string.title_activity_home));
+        meetingDAO = new MeetingDAO(context);
 
         mRecyclerView = (RecyclerView) mHomeView.findViewById(R.id.home_meeting_list);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<MeetingModel> meetingItems = simulateMeetings();
-
+        ArrayList<MeetingModel> meetingItems = meetingDAO.getActiveMeetings();
         mAdapter = new MeetingAdapter(context, meetingItems);
         mRecyclerView.setAdapter(mAdapter);
 
