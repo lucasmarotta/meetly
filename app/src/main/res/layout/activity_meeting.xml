@@ -52,6 +52,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
 
+            <Button
+                android:id="@+id/buttonSetDate"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:onClick="setDate"
+                android:text="Set Date"
+                />
+
             <EditText
                 android:id="@+id/meeting_date"
                 android:layout_width="match_parent"
@@ -59,13 +67,22 @@
                 android:layout_marginLeft="15dp"
                 android:maxLength="@integer/form_generic_size"
                 android:hint="@string/form_date_hint"/>
+
         </LinearLayout>
 
-        <!-- DATE -->
+        <!-- TIME -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/buttonSetTime"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:onClick="showTimePickerDialog"
+                android:text="Set Time"
+                />
 
             <EditText
                 android:id="@+id/meeting_time"
