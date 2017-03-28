@@ -26,6 +26,8 @@ public class MeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         session = new SessionHelper(this);
+        setTitle(getResources().getString(R.string.title_activity_meeting));
+
         setContentView(R.layout.activity_meeting);
 
         rootView = findViewById(R.id.activity_meeting);

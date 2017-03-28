@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         session = new SessionHelper(this);
+        setTitle(getResources().getString(R.string.title_activity_login));
 
         setContentView(R.layout.activity_login);
         if(!session.isUserLogged()) {

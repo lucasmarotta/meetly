@@ -1,8 +1,6 @@
 package br.ufba.dcc.meetly.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         session = new SessionHelper(this);
+        setTitle(getResources().getString(R.string.title_activity_home));
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -159,9 +158,7 @@ public class MainActivity extends AppCompatActivity
      */
     public void logoutAction(MenuItem item)
     {
-        SharedPreferences.Editor editor = getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE).edit();
-        editor.putString("email",null);
-        editor.apply();
+        session.setValue(SessionHelper.USER_SESSION_PREF,null);
         Intent intent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
     }
