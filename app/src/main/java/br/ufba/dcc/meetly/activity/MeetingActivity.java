@@ -13,14 +13,17 @@ import br.ufba.dcc.meetly.dao.MeetingDAO;
 import br.ufba.dcc.meetly.helper.MeetingFormHelper;
 import br.ufba.dcc.meetly.helper.SessionHelper;
 import br.ufba.dcc.meetly.models.MeetingModel;
+import br.ufba.dcc.meetly.models.UserModel;
 
 public class MeetingActivity extends AppCompatActivity {
 
     private MeetingModel meeting = null;
+    private UserModel user = null;
     private SessionHelper session;
     private View rootView;
     private MeetingFormHelper meetingFormHelper;
     private MeetingDAO meetingDAO;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +43,15 @@ public class MeetingActivity extends AppCompatActivity {
     }
 
     public void saveMeetingAction(MenuItem item) {
+        session = new SessionHelper(this);
+        user = session.getSessionUser();
+
         boolean newMeeting = (meeting == null);
 
         if(meetingFormHelper.validateForm(newMeeting)) {
             if (newMeeting) {
                 meeting = meetingFormHelper.getMeeting();
-
+                meeting.setUserId(user.getId());
                 if (meetingDAO.store(meeting)) {
                     Toast.makeText(this, "Reunião Casdastrada!", Toast.LENGTH_SHORT).show();
                 } else {

@@ -31,18 +31,18 @@ public class DatabaseHelper extends SQLiteOpenHelper
             "\tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
             "\tuser_id INTEGER NOT NULL,\n" +
             "\ttitle TEXT NOT NULL,\n" +
+            "\tsubject TEXT,\n" +
             "\tdate TEXT NOT NULL,\n" +
             "\ttime TEXT NOT NULL,\n" +
-            "\taddress_state TEXT NOT NULL,\n" +
-            "\taddress_city TEXT NOT NULL,\n" +
-            "\taddress_name TEXT NOT NULL,\n" +
+            "\taddress_state TEXT,\n" +
+            "\taddress_city TEXT,\n" +
+            "\taddress_name TEXT,\n" +
             "\taddress_cep TEXT,\n" +
-            "\taddress_neighborhood TEXT NOT NULL,\n" +
+            "\taddress_neighborhood TEXT,\n" +
             "\taddress_number TEXT,\n" +
             "\taddress_complement TEXT,\n" +
             "\troom TEXT,\n" +
             "\tfloor INTEGER,\n" +
-            "\tsubject TEXT,\n" +
             "\tFOREIGN KEY(user_id) REFERENCES user(id));";
     private static final String SQL_CREATE_MEETING_USER = "CREATE TABLE IF NOT EXISTS meeting_user(\n" +
             "\tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +

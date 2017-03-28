@@ -176,9 +176,10 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void createMeetingView(View view)
+    public void createMeetingAction(View view)
     {
-
+        Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
+        startActivity(intent);
     }
 
 

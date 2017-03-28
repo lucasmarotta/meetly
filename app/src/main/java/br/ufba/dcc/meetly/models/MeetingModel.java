@@ -78,7 +78,7 @@ public class MeetingModel extends BaseModel
         ContentValues values = new ContentValues();
         values.put("title",title);
         values.put("subject",subject);
-        values.put("userId",userId);
+        values.put("user_id", userId);
         values.put("date",date);
         values.put("time",time);
         return values;
