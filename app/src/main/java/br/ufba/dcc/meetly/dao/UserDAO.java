@@ -10,17 +10,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import br.ufba.dcc.meetly.models.UserModel;
 
-/**
- * Created by Lucas on 26/03/2017.
- */
-
 public class UserDAO extends BaseDAO
 {
-
-    public String SQL_CREATE_ENTRIES;
-    public String SQL_DELETE_ENTRIES;
-    public String SQL_USER_EXISTS;
-    public String SQL_GET_USER_BY_EMAIL;
+    private static final String SQL_USER_EXISTS = "SELECT id FROM user WHERE email = ?";
+    private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email = ?";
 
     public UserDAO(Context context)
     {
@@ -55,7 +48,7 @@ public class UserDAO extends BaseDAO
 
     public boolean isUserExists(UserModel model)
     {
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery(SQL_USER_EXISTS,new String[] {String.valueOf(model.getEmail())});
         boolean result = c.moveToFirst();
         c.close();
@@ -64,7 +57,7 @@ public class UserDAO extends BaseDAO
 
     public UserModel getUserByEmail(String email)
     {
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery(SQL_GET_USER_BY_EMAIL, new String[] {String.valueOf(email)});
         if(c.moveToFirst()) {
             return getModel(c);
@@ -95,36 +88,5 @@ public class UserDAO extends BaseDAO
         user.setCompany(c.getString(c.getColumnIndex("company")));
         user.setRole(c.getString(c.getColumnIndex("role")));
         return user;
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db)
-    {
-        db.execSQL(SQL_CREATE_ENTRIES);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
-        db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
-    }
-
-    @Override
-    protected void setSQLVars()
-    {
-        SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS "+tableName+" (\n" +
-                "\tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "\temail TEXT NOT NULL,\n" +
-                "\tname TEXT NOT NULL,\n" +
-                "\tpass TEXT NOT NULL,\n" +
-                "\tphone TEXT,\n" +
-                "\tcompany TEXT,\n" +
-                "\trole TEXT,\n" +
-                "\tCONSTRAINT ux_"+tableName+" UNIQUE (email));";
-
-        SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS "+tableName+";";
-        SQL_USER_EXISTS = "SELECT email FROM "+tableName+" WHERE email = ?";
-        SQL_GET_USER_BY_EMAIL = "SELECT * FROM "+tableName+" WHERE email = ?";
     }
 }

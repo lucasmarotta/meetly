@@ -1,9 +1,7 @@
 package br.ufba.dcc.meetly.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +12,7 @@ import android.widget.Toast;
 
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.dao.UserDAO;
+import br.ufba.dcc.meetly.helper.SessionHelper;
 import br.ufba.dcc.meetly.helper.UserFormHelper;
 import br.ufba.dcc.meetly.models.UserModel;
 
@@ -21,6 +20,7 @@ public class ProfileActivity extends AppCompatActivity
 {
     private UserModel user = null;
     private View rootView;
+    private SessionHelper session;
     private UserFormHelper userFormHelper;
     private UserDAO userDAO;
     private String profileEmail;
@@ -32,8 +32,15 @@ public class ProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile);
         rootView = findViewById(R.id.activity_profile);
         userFormHelper = new UserFormHelper(rootView);
+
+        session = new SessionHelper(this);
+        user = session.getSessionUser();
+        if(user != null) {
+            profileEmail = user.getEmail();
+        }
+        userFormHelper.setUser(user);
         userDAO = new UserDAO(this);
-        setSessionUser();
+
         /*Intent intent = getIntent();
         if(intent != null)
         {
@@ -87,9 +94,7 @@ public class ProfileActivity extends AppCompatActivity
                     if(profileEmail.equalsIgnoreCase(user.getEmail()) || !userDAO.isUserExists(user)) {
                         if(userDAO.update(user)) {
                             if(!profileEmail.equalsIgnoreCase(user.getEmail())) {
-                                SharedPreferences.Editor editor = getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE).edit();
-                                editor.putString("email",user.getEmail());
-                                editor.apply();
+                                session.setValue("email",user.getEmail());
                                 profileEmail = user.getEmail();
                             }
                             Toast.makeText(this, "Usuário atualizado!", Toast.LENGTH_SHORT).show();
@@ -125,18 +130,6 @@ public class ProfileActivity extends AppCompatActivity
                     }
                 });
         alertDialog.show();
-    }
-
-    private void setSessionUser()
-    {
-        SharedPreferences sharedPref = this.getSharedPreferences(this.getPackageName(),Context.MODE_PRIVATE);
-        this.profileEmail = sharedPref.getString("email",null);
-        if(profileEmail != null) {
-            user = userDAO.getUserByEmail(profileEmail);
-            userFormHelper.setUser(user);
-        } else {
-            user = null;
-        }
     }
 
     public String getProfileEmail()

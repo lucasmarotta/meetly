@@ -53,11 +53,13 @@ public class UserFormHelper
 
     public void setUser(UserModel user)
     {
-        email.setText(user.getEmail());
-        name.setText(user.getName());
-        phone.setText(user.getPhone());
-        company.setText(user.getCompany());
-        role.setText(user.getRole());
+        if(user != null) {
+            email.setText(user.getEmail());
+            name.setText(user.getName());
+            phone.setText(user.getPhone());
+            company.setText(user.getCompany());
+            role.setText(user.getRole());
+        }
     }
 
     public boolean validateForm(boolean newUser)

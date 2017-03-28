@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -16,12 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.fragment.ArchivedFragment;
 import br.ufba.dcc.meetly.fragment.HomeFragment;
+import br.ufba.dcc.meetly.helper.SessionHelper;
+import br.ufba.dcc.meetly.models.UserModel;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -29,7 +29,11 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+    private SessionHelper session;
+    private UserModel sessionUser;
     private FragmentManager mFragmentManager;
+    private TextView navUser;
+    private TextView navUserEmail;
     private Menu menu;
 
     /**
@@ -40,22 +44,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        session = new SessionHelper(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mFragmentManager = getSupportFragmentManager();
-
-        // baguncando
-        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.addMeetingButton);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
@@ -63,6 +58,15 @@ public class MainActivity extends AppCompatActivity
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        UserModel sessionUser = session.getSessionUser();
+
+        if(sessionUser != null) {
+            navUser = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.nav_user);
+            navUserEmail = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.nav_user_mail);
+            navUser.setText(sessionUser.getName());
+            navUserEmail.setText(sessionUser.getEmail());
+        }
 
         mFragmentManager.beginTransaction().replace(R.id.content_frame_main, new HomeFragment()).commit();
     }
@@ -168,8 +172,15 @@ public class MainActivity extends AppCompatActivity
      */
     public void searchAction(MenuItem item)
     {
+        Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
+        startActivity(intent);
+    }
+
+    public void createMeetingView(View view)
+    {
 
     }
+
 
     /**
      * Listener for navigation drawer. Disabled to use onClick attributes
@@ -181,4 +192,10 @@ public class MainActivity extends AppCompatActivity
     {
         return false;
     }
+
+    public UserModel getSessionUser()
+    {
+        return sessionUser;
+    }
+
 }
