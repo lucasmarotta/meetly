@@ -8,15 +8,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.apache.commons.validator.GenericValidator;
-import org.w3c.dom.Text;
 
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.models.MeetingModel;
-import br.ufba.dcc.meetly.models.UserModel;
 
 public class MeetingFormHelper
 {
-    private View view;
+    private View formView;
     private Context context;
     private EditText title;
     private EditText subject;
@@ -36,33 +34,43 @@ public class MeetingFormHelper
 
     public MeetingFormHelper(View view)
     {
-        this.view = view;
+        this.formView = view;
         context = view.getContext();
         init();
     }
 
     private void init()
     {
-        title = (EditText) view.findViewById(R.id.meeting_title);
-        subject = (EditText) view.findViewById(R.id.meeting_subject);
-        date = (TextView) view.findViewById(R.id.meeting_date);
-        time = (TextView) view.findViewById(R.id.meeting_time);
-        state = (Spinner) view.findViewById(R.id.meeting_state);
+        title = (EditText) formView.findViewById(R.id.meeting_title);
+        subject = (EditText) formView.findViewById(R.id.meeting_subject);
+        date = (TextView) formView.findViewById(R.id.meeting_date);
+        time = (TextView) formView.findViewById(R.id.meeting_time);
+        state = (Spinner) formView.findViewById(R.id.meeting_state);
 
-        cep = (EditText) view.findViewById(R.id.meeting_cep);
-        city = (EditText) view.findViewById(R.id.meeting_city);
-        address = (EditText) view.findViewById(R.id.meeting_address_name);
-        neighborhood = (EditText) view.findViewById(R.id.meeting_address_neighborhood);
-        complement = (EditText) view.findViewById(R.id.meeting_address_complement);
-        number = (EditText) view.findViewById(R.id.meeting_address_number);
-        room = (EditText) view.findViewById(R.id.meeting_room);
-        floor = (EditText) view.findViewById(R.id.meeting_floor);
+        cep = (EditText) formView.findViewById(R.id.meeting_cep);
+        city = (EditText) formView.findViewById(R.id.meeting_city);
+        address = (EditText) formView.findViewById(R.id.meeting_address_name);
+        neighborhood = (EditText) formView.findViewById(R.id.meeting_address_neighborhood);
+        complement = (EditText) formView.findViewById(R.id.meeting_address_complement);
+        number = (EditText) formView.findViewById(R.id.meeting_address_number);
+        room = (EditText) formView.findViewById(R.id.meeting_room);
+        floor = (EditText) formView.findViewById(R.id.meeting_floor);
 
-
-        state = (Spinner) view.findViewById(R.id.meeting_state);
+        state = (Spinner) formView.findViewById(R.id.meeting_state);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.form_states, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         state.setAdapter(adapter);
+
+        cep = (EditText) formView.findViewById(R.id.meeting_cep);
+        cep.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus) {
+                    CepHelper.fillAddressByCep(formView, cep.getText().toString());
+                }
+            }
+        });
 
     }
 
@@ -163,8 +171,6 @@ public class MeetingFormHelper
             address.setError("Endereço inválido");
             validation = false;
         }
-
-
 
         return validation;
     }

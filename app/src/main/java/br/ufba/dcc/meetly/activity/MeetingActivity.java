@@ -1,7 +1,7 @@
 package br.ufba.dcc.meetly.activity;
 
-import android.app.Dialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,9 +59,7 @@ public class MeetingActivity extends AppCompatActivity {
 
         initDatePicker();
 
-        // init TimePicker
         timeView = (TextView) findViewById(R.id.meeting_time);
-        // end TimePicker
     }
 
 

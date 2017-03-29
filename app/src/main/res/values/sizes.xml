@@ -7,4 +7,5 @@
     <integer name="form_phone_size">23</integer>
     <integer name="form_cep_size">9</integer>
     <integer name="form_address_size">160</integer>
+    <integer name="form_room_floor_size">10</integer>
 </resources>

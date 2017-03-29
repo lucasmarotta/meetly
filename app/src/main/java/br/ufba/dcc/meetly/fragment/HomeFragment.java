@@ -52,7 +52,6 @@ public class HomeFragment extends android.support.v4.app.Fragment
         mAdapter = new MeetingAdapter(context, meetingItems);
         mRecyclerView.setAdapter(mAdapter);
 
-
         return mHomeView;
     }
 

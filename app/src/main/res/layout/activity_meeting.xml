@@ -137,6 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:maxLength="@integer/form_cep_size"
+                android:inputType="number"
                 android:hint="@string/form_cep_hint"/>
         </LinearLayout>
 
@@ -222,7 +223,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:maxLength="@integer/form_generic_size"
-                android:inputType="number"
                 android:hint="@string/form_address_neighborhood_hint"/>
         </LinearLayout>
 
@@ -286,8 +286,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:maxLength="@integer/form_generic_size"
-                android:inputType="number"
+                android:maxLength="@integer/form_room_floor_size"
                 android:hint="@string/form_floor_hint"/>
         </LinearLayout>
 
@@ -308,8 +307,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:maxLength="@integer/form_generic_size"
-                android:inputType="number"
+                android:maxLength="@integer/form_room_floor_size"
                 android:hint="@string/form_room_hint"/>
         </LinearLayout>
 
