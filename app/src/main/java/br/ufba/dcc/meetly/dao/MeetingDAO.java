@@ -10,14 +10,14 @@ import br.ufba.dcc.meetly.models.MeetingModel;
 
 public class MeetingDAO extends BaseDAO
 {
-    private static final String GET_ACTIVE_MEETINGS = "SELECT m.*, t.color AS color\n" +
+    private static final String GET_ACTIVE_MEETINGS = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
             "ORDER BY date, time";
 
-    private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color\n" +
+    private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
@@ -77,6 +77,7 @@ public class MeetingDAO extends BaseDAO
         meeting.setSubject(c.getString(c.getColumnIndex("subject")));
         meeting.setUserId(c.getInt(c.getColumnIndex("user_id")));
         System.out.println(meeting);
+        System.out.println(c.getString(c.getColumnIndex("d_now")));
         return meeting;
     }
 }
