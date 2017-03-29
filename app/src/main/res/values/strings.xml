@@ -39,6 +39,15 @@
     <string name="form_subject_hint">Assunto</string>
     <string name="form_date_hint">Data</string>
     <string name="form_time_hint">Horário</string>
+    <string name="form_state_hint">Estado</string>
+    <string name="form_cep_hint">CEP</string>
+    <string name="form_city_hint">Cidade</string>
+    <string name="form_address_name_hint">Endereço</string>
+    <string name="form_address_neighborhood_hint">Bairro (Opcional)</string>
+    <string name="form_address_number_hint">Número (Opcional)</string>
+    <string name="form_address_complement_hint">Complemento (Opcional)</string>
+    <string name="form_floor_hint">Andar (Opcional)</string>
+    <string name="form_room_hint">Sala (Opcional)</string>
 
     <!-- FORM VALIDATION -->
 

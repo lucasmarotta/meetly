@@ -3,5 +3,8 @@
     <integer name="form_generic_size">50</integer>
     <integer name="form_pass_size">35</integer>
     <integer name="form_email_size">144</integer>
+    <integer name="form_subject_size">255</integer>
     <integer name="form_phone_size">23</integer>
+    <integer name="form_cep_size">9</integer>
+    <integer name="form_address_size">160</integer>
 </resources>

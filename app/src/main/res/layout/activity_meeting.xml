@@ -16,11 +16,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+
         <!-- TITLE -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_agenda"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
 
             <EditText
                 android:id="@+id/meeting_title"
@@ -37,12 +50,19 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
 
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_text"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
             <EditText
                 android:id="@+id/meeting_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:maxLength="@integer/form_generic_size"
+                android:maxLength="@integer/form_subject_size"
                 android:hint="@string/form_subject_hint"/>
         </LinearLayout>
 
@@ -52,20 +72,22 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
 
-            <Button
-                android:id="@+id/buttonSetDate"
-                android:layout_width="100dp"
+            <ImageView
+                android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"
                 android:onClick="setDate"
-                android:text="Set Date"
-                />
+                app:srcCompat="@drawable/ic_calendar"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/meeting_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:maxLength="@integer/form_generic_size"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:onClick="setDate"
+                android:textSize="18sp"
                 android:hint="@string/form_date_hint"/>
 
         </LinearLayout>
@@ -76,21 +98,219 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
 
-            <Button
-                android:id="@+id/buttonSetTime"
-                android:layout_width="100dp"
+            <ImageView
+                android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"
+                android:onClick="showDate"
+                app:srcCompat="@drawable/ic_clock"/>
+
+            <TextView
+                android:id="@+id/meeting_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
                 android:onClick="showTimePickerDialog"
-                android:text="Set Time"
-                />
+                android:textSize="18sp"
+                android:hint="@string/form_time_hint"/>
+
+        </LinearLayout>
+
+        <!-- LOCATION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_location"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
 
             <EditText
-                android:id="@+id/meeting_time"
+                android:id="@+id/meeting_cep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLength="@integer/form_cep_size"
+                android:hint="@string/form_cep_hint"/>
+        </LinearLayout>
+
+        <!-- STATE -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"
+                android:onClick="showDate"
+                app:srcCompat="@drawable/ic_map"/>
+
+            <Spinner
+                android:id="@+id/meeting_state"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_map"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/meeting_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:maxLength="@integer/form_generic_size"
-                android:hint="@string/form_time_hint"/>
+                android:hint="@string/form_city_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_map"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/meeting_address_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLength="@integer/form_address_size"
+                android:hint="@string/form_address_name_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_map"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/meeting_address_neighborhood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLength="@integer/form_generic_size"
+                android:inputType="number"
+                android:hint="@string/form_address_neighborhood_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_map"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/meeting_address_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLength="@integer/form_generic_size"
+                android:inputType="number"
+                android:hint="@string/form_address_number_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_map"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/meeting_address_complement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLength="@integer/form_generic_size"
+                android:hint="@string/form_address_complement_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_location"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/meeting_floor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLength="@integer/form_generic_size"
+                android:inputType="number"
+                android:hint="@string/form_floor_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_location"
+                android:tint="@color/md_grey_700"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/meeting_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:maxLength="@integer/form_generic_size"
+                android:inputType="number"
+                android:hint="@string/form_room_hint"/>
         </LinearLayout>
 
     </LinearLayout>

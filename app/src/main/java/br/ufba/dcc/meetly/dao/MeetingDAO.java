@@ -16,6 +16,12 @@ public class MeetingDAO extends BaseDAO
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)";
 
+    private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color\n" +
+            "FROM meeting AS m\n" +
+            "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
+            "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
+            "WHERE m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)";
+
     public MeetingDAO(Context context)
     {
         super(context);
@@ -25,6 +31,20 @@ public class MeetingDAO extends BaseDAO
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery(GET_ACTIVE_MEETINGS,null);
+        ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
+        while(c.moveToNext())
+        {
+            MeetingModel meeting = getModel(c);
+            meeting.setColor(c.getString(c.getColumnIndex("color")));
+            meetingItems.add(meeting);
+        }
+        return meetingItems;
+    }
+
+    public ArrayList<MeetingModel> getArchivedMeetings()
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery(GET_ARCHIVED_MEETINGS,null);
         ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
         while(c.moveToNext())
         {

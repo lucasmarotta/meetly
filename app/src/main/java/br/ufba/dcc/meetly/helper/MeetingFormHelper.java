@@ -2,9 +2,13 @@ package br.ufba.dcc.meetly.helper;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.apache.commons.validator.GenericValidator;
+import org.w3c.dom.Text;
 
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.models.MeetingModel;
@@ -20,8 +24,9 @@ public class MeetingFormHelper
     private Context context;
     private EditText title;
     private EditText subject;
-    private EditText date;
-    private EditText time;
+    private TextView date;
+    private TextView time;
+    private Spinner state;
 
     public MeetingFormHelper(View view)
     {
@@ -34,8 +39,15 @@ public class MeetingFormHelper
     {
         title = (EditText) view.findViewById(R.id.meeting_title);
         subject = (EditText) view.findViewById(R.id.meeting_subject);
-        date = (EditText) view.findViewById(R.id.meeting_date);
-        time = (EditText) view.findViewById(R.id.meeting_time);
+        date = (TextView) view.findViewById(R.id.meeting_date);
+        time = (TextView) view.findViewById(R.id.meeting_time);
+        state = (Spinner) view.findViewById(R.id.meeting_state);
+
+        state = (Spinner) view.findViewById(R.id.meeting_state);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.form_states, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        state.setAdapter(adapter);
+
     }
 
     public MeetingModel getMeeting()
