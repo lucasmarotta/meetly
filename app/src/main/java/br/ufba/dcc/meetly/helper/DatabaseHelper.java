@@ -103,14 +103,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
         for (String tb : TABLES) {
-            db.execSQL(SQL_DROP_TABLE, new String[] {String.valueOf(tb)});
+            db.execSQL(String.valueOf(SQL_DROP_TABLE).replace("?",tb));
         }
     }
 
     public void truncate(String table)
     {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(SQL_TRUNCATE_TABLE, new String[] {String.valueOf(table)});
+        db.execSQL(String.valueOf(SQL_TRUNCATE_TABLE).replace("?",table));
         onCreate(db);
     }
 

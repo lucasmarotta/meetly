@@ -190,6 +190,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             public void onClick(View v)
             {
                 String mapLocation = "Brasil, "+meeting.getAddressState()+", "+meeting.getAddressCity()+", "+meeting.getAddressName();
+                if(meeting.getAddressNumber() != null) {
+                    mapLocation = mapLocation+" "+meeting.getAddressNumber();
+                }
+
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q="+mapLocation));
                 viewHolder.getItemView().getContext().startActivity(intent);
             }

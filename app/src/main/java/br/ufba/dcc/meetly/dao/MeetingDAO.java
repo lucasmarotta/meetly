@@ -14,13 +14,15 @@ public class MeetingDAO extends BaseDAO
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
-            "WHERE m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)";
+            "WHERE m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
+            "ORDER BY date, time";
 
     private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
-            "WHERE m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)";
+            "WHERE m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
+            "ORDER BY date DESC, time DESC";
 
     public MeetingDAO(Context context)
     {
@@ -61,18 +63,20 @@ public class MeetingDAO extends BaseDAO
         MeetingModel meeting = new MeetingModel();
         meeting.setId(c.getInt(c.getColumnIndex("id")));
         meeting.setTitle(c.getString(c.getColumnIndex("title")));
-        meeting.setSubject(c.getString(c.getColumnIndex("subject")));
         meeting.setDate(c.getString(c.getColumnIndex("date")));
         meeting.setTime(c.getString(c.getColumnIndex("time")));
-        meeting.setAddressState(c.getString(c.getColumnIndex("address_name")));
+        meeting.setAddressState(c.getString(c.getColumnIndex("address_state")));
+        meeting.setAddressName(c.getString(c.getColumnIndex("address_name")));
         meeting.setAddressCity(c.getString(c.getColumnIndex("address_city")));
         meeting.setAddressCep(c.getString(c.getColumnIndex("address_cep")));
-        meeting.setUserId(c.getInt(c.getColumnIndex("user_id")));
         meeting.setAddressNeighborhood(c.getString(c.getColumnIndex("address_neighborhood")));
         meeting.setAddressComplement(c.getString(c.getColumnIndex("address_complement")));
         meeting.setAddressNumber(c.getString(c.getColumnIndex("address_number")));
         meeting.setFloor(c.getString(c.getColumnIndex("floor")));
         meeting.setRoom(c.getString(c.getColumnIndex("room")));
+        meeting.setSubject(c.getString(c.getColumnIndex("subject")));
+        meeting.setUserId(c.getInt(c.getColumnIndex("user_id")));
+        System.out.println(meeting);
         return meeting;
     }
 }

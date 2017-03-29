@@ -235,10 +235,40 @@ public class MeetingModel extends BaseModel
     {
         ContentValues values = new ContentValues();
         values.put("title",title);
+        values.put("date",getSqlDate());
+        values.put("time",time);
+        values.put("address_state",addressState);
+        values.put("address_city",addressCity);
+        values.put("address_name",addressName);
+        values.put("address_cep",addressCep);
+        values.put("address_neighborhood",addressNeighborhood);
+        values.put("address_complement",addressComplement);
+        values.put("room",room);
+        values.put("floor",floor);
         values.put("subject",subject);
         values.put("user_id",userId);
-        values.put("date",date);
-        values.put("time",time);
         return values;
+    }
+
+    @Override
+    public String toString() {
+        return "MeetingModel{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", addressState='" + addressState + '\'' +
+                ", addressCity='" + addressCity + '\'' +
+                ", addressName='" + addressName + '\'' +
+                ", addressCep='" + addressCep + '\'' +
+                ", addressNeighborhood='" + addressNeighborhood + '\'' +
+                ", addressNumber='" + addressNumber + '\'' +
+                ", addressComplement='" + addressComplement + '\'' +
+                ", room='" + room + '\'' +
+                ", floor='" + floor + '\'' +
+                ", subject='" + subject + '\'' +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

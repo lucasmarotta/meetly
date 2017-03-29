@@ -44,10 +44,10 @@ public class CepHelper
             if(viaCEPEndereco != null) {
                 ((EditText) view.findViewById(R.id.meeting_cep)).setText(viaCEPEndereco.getCep());
 
-                Spinner city = (Spinner) view.findViewById(R.id.meeting_state);
+                Spinner state = (Spinner) view.findViewById(R.id.meeting_state);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.form_states, android.R.layout.simple_spinner_item);
                 int position = adapter.getPosition(viaCEPEndereco.getUf().toUpperCase());
-                city.setSelection(position);
+                state.setSelection(position);
 
                 ((EditText) view.findViewById(R.id.meeting_city)).setText(viaCEPEndereco.getLocalidade());
                 ((EditText) view.findViewById(R.id.meeting_city)).setError(null);

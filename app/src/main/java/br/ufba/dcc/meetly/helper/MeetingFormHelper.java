@@ -21,6 +21,7 @@ public class MeetingFormHelper
     private TextView date;
     private TextView time;
     private Spinner state;
+    private ArrayAdapter<CharSequence> stateAdapter;
 
     private EditText cep;
     private EditText city;
@@ -57,9 +58,9 @@ public class MeetingFormHelper
         floor = (EditText) formView.findViewById(R.id.meeting_floor);
 
         state = (Spinner) formView.findViewById(R.id.meeting_state);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.form_states, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        state.setAdapter(adapter);
+        stateAdapter = ArrayAdapter.createFromResource(context, R.array.form_states, android.R.layout.simple_spinner_item);
+        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        state.setAdapter(stateAdapter);
 
         cep = (EditText) formView.findViewById(R.id.meeting_cep);
         cep.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -81,7 +82,6 @@ public class MeetingFormHelper
         meeting.setSubject(subject.getText().toString());
         meeting.setDate(date.getText().toString());
         meeting.setTime(time.getText().toString());
-
         meeting.setAddressCep(cep.getText().toString());
         meeting.setAddressState(state.getSelectedItem().toString());
         meeting.setAddressCity(city.getText().toString());
@@ -101,10 +101,7 @@ public class MeetingFormHelper
         subject.setText(meeting.getSubject());
         date.setText(meeting.getDate());
         time.setText(meeting.getTime());
-
-        // TODO
-        // falta setar o spinner.
-
+        state.setSelection(stateAdapter.getPosition(meeting.getAddressState()));
         cep.setText(meeting.getAddressCep());
         city.setText(meeting.getAddressCity());
         address.setText(meeting.getAddressName());
@@ -118,8 +115,6 @@ public class MeetingFormHelper
     public boolean validateForm(boolean newMeeting)
     {
         boolean validation = true;
-        String CEP_REGEXP = "^\\d{5}(-)?\\d{3}$";
-        String TIME_REGEXP = "^\\d{2}[:]\\d{2}$";
 
         if(GenericValidator.isBlankOrNull(title.getText().toString())) {
             title.setError("Título é obrigatório");

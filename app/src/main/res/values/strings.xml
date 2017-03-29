@@ -4,6 +4,7 @@
     <string name="navigation_drawer_open">Abrir navegação</string>
     <string name="navigation_drawer_close">Fechar navegação</string>
     <string name="no_account">Sem conta? Crie uma!</string>
+    <string name="meeing_item_shared">Compartilhada</string>
 
     <!-- MENU'S  -->
     <string name="nav_app_home">Início</string>
@@ -27,7 +28,7 @@
     <string name="title_activity_home">Início</string>
     <string name="title_activity_profile">Perfil</string>
     <string name="title_activity_meeting">Criar Reunião</string>
-    <string name="title_fragment_archived">Arquivadas</string>
+    <string name="title_view_archived">Arquivadas</string>
 
     <!-- FORMS -->
     <string name="form_email_hint">Email</string>

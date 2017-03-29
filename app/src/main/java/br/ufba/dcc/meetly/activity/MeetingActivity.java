@@ -34,7 +34,6 @@ public class MeetingActivity extends AppCompatActivity {
     private MeetingFormHelper meetingFormHelper;
     private MeetingDAO meetingDAO;
 
-
     // Datepicker
     private DatePicker datePicker;
     private Calendar calendar;
@@ -50,7 +49,6 @@ public class MeetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         session = new SessionHelper(this);
         setTitle(getResources().getString(R.string.title_activity_meeting));
-
         setContentView(R.layout.activity_meeting);
 
         rootView = findViewById(R.id.activity_meeting);
@@ -58,24 +56,24 @@ public class MeetingActivity extends AppCompatActivity {
         meetingDAO = new MeetingDAO(this);
 
         initDatePicker();
-
         timeView = (TextView) findViewById(R.id.meeting_time);
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_options_meeting, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void saveMeetingAction(MenuItem item) {
-        session = new SessionHelper(this);
+    public void saveMeetingAction(MenuItem item)
+    {
         user = session.getSessionUser();
-
         boolean newMeeting = (meeting == null);
 
-        if(meetingFormHelper.validateForm(newMeeting)) {
+        if(meetingFormHelper.validateForm(newMeeting))
+        {
             if (newMeeting) {
                 meeting = meetingFormHelper.getMeeting();
                 meeting.setUserId(user.getId());
@@ -89,7 +87,6 @@ public class MeetingActivity extends AppCompatActivity {
             }
         }
     }
-
 
     // DatePicker
     private void initDatePicker()
@@ -110,7 +107,8 @@ public class MeetingActivity extends AppCompatActivity {
     }
 
     @Override
-    protected DatePickerDialog onCreateDialog(int id) {
+    protected DatePickerDialog onCreateDialog(int id)
+    {
         if (id == 999) {
             return new DatePickerDialog(this,
                     myDateListener, year, month, day);
@@ -128,7 +126,8 @@ public class MeetingActivity extends AppCompatActivity {
                 }
             };
 
-    private void showDate(int year, int month, int day) {
+    private void showDate(int year, int month, int day)
+    {
         dateView.setText(new StringBuilder()
                 .append(String.format("%02d",  day)).append("/")
                 .append(String.format("%02d",  month)).append("/")
@@ -137,10 +136,12 @@ public class MeetingActivity extends AppCompatActivity {
 
     // TimePicker
     public static class TimePickerFragment extends DialogFragment
-            implements TimePickerDialog.OnTimeSetListener {
+            implements TimePickerDialog.OnTimeSetListener
+    {
 
         @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
+        public Dialog onCreateDialog(Bundle savedInstanceState)
+        {
 
             final Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -160,7 +161,8 @@ public class MeetingActivity extends AppCompatActivity {
         }
     }
 
-    public void showTimePickerDialog(View v) {
+    public void showTimePickerDialog(View v)
+    {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
