@@ -103,7 +103,7 @@
                 android:layout_height="35dp"
                 android:tint="@color/md_grey_700"
                 android:layout_gravity="center"
-                android:onClick="showDate"
+                android:onClick="showTimePickerDialog"
                 app:srcCompat="@drawable/ic_clock"/>
 
             <TextView

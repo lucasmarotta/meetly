@@ -1,13 +1,19 @@
 package br.ufba.dcc.meetly.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,6 +32,13 @@ public class HomeFragment extends android.support.v4.app.Fragment
     private MeetingAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private MeetingDAO meetingDAO;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     /**
      * Load Home view to the fragment
@@ -53,6 +66,59 @@ public class HomeFragment extends android.support.v4.app.Fragment
         mRecyclerView.setAdapter(mAdapter);
 
         return mHomeView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    /**
+     * Action Bar options listener
+     * @param item items of Action Bar
+     * @return Return the selected action bar item
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.action_menu_go_to_latest:
+            {
+                mRecyclerView.getLayoutManager().scrollToPosition(0);
+                break;
+            }
+            case R.id.action_menu_refresh:
+            {
+                mAdapter.updateItems(meetingDAO.getActiveMeetings());
+                break;
+            }
+            case R.id.action_menu_settings:
+            {
+                showSettingsDialog();
+            }
+        }
+        return true;
+    }
+
+    private void showSettingsDialog()
+    {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.view_daterange_picker_dialog);
+        dialog.setTitle("Defina um período");
+
+        TextView startDate = (TextView) dialog.findViewById(R.id.dialog_start_date);
+        TextView endDate = (TextView) dialog.findViewById(R.id.dialog_end_date);
+
+        startDate.setText("Banana");
+        endDate.setText("Pijama");
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
     }
 
     //Remover depois, só pra testar

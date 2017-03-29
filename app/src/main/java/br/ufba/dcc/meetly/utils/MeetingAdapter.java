@@ -204,6 +204,32 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         });
     }
 
+    public void updateItems(ArrayList<MeetingModel> meetingItems)
+    {
+        this.meetingItems.clear();
+        this.meetingItems.addAll(meetingItems);
+        notifyDataSetChanged();
+    }
+
+    public void removeItem(int position)
+    {
+        meetingItems.remove(position);
+        if(lastPosition == position)
+        {
+            if(lastPosition >= 0) {
+                lastPosition--;
+            } else {
+                lastPosition = -1;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addItem(MeetingModel meeting)
+    {
+        meetingItems.add(meeting);
+    }
+
     private void setAnimation(View viewToAnimate, int position)
     {
         // If the bound view wasn't previously displayed on screen, it's animated

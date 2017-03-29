@@ -85,47 +85,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Context Menu options listener
-     * @param menu context menu
-     * @return true
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_options_main, menu);
-        this.menu = menu;
-        return true;
-    }
-
-    /**
-     * Action Bar options listener
-     * @param item items of Action Bar
-     * @return Return the selected action bar item
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_menu_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
      * Handle the drawer navigation drawer item for Home item
      * @param item item from navigation drawer
      */
     public void goHomeAction(MenuItem item)
     {
-        mFragmentManager.beginTransaction().replace(R.id.content_frame_main, new HomeFragment()).commit();
+        mFragmentManager.beginTransaction().replace(R.id.content_frame_main, new HomeFragment(), "HomeFragment").commit();
         item.setChecked(true);
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
@@ -148,7 +113,7 @@ public class MainActivity extends AppCompatActivity
      */
     public void goArchivedAction(MenuItem item)
     {
-        mFragmentManager.beginTransaction().replace(R.id.content_frame_main, new ArchivedFragment()).commit();
+        mFragmentManager.beginTransaction().replace(R.id.content_frame_main, new ArchivedFragment(), "ArchivedFragment").commit();
         item.setChecked(true);
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
@@ -164,22 +129,36 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    /**
-     * Handle the drawer navigation for Logout item
-     * @param item item from navigation drawer
-     */
-    public void searchAction(MenuItem item)
-    {
-        Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
-        startActivity(intent);
-    }
-
     public void createMeetingAction(View view)
     {
         Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Context Menu options listener
+     * @param menu context menu
+     * @return true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_options_main, menu);
+        this.menu = menu;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Action Bar options listener
+     * @param item items of Action Bar
+     * @return Return the selected action bar item
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Listener for navigation drawer. Disabled to use onClick attributes

@@ -12,11 +12,14 @@
     <string name="nav_logout">Sair</string>
     <string name="nav_header_user">User</string>
     <string name="nav_header_mail">user@mail.com</string>
+    <string name="dialog_button_filter">Filtrar</string>
+    <string name="diaglo_daterange_title">Defina um Período:</string>
 
     <!-- ACTION MENU'S  -->
-
-    <string name="action_menu_settings">Opções</string>
-    <string name="action_menu_search">Buscar</string>
+    <string name="action_menu_options">Opções</string>
+    <string name="action_menu_settings">Filtrar</string>
+    <string name="action_menu_refresh">Atualizar</string>
+    <string name="action_menu_go_to_lastest">Ir para última</string>
     <string name="action_menu_save">Salvar</string>
 
     <!-- ACTIVITIES -->
@@ -38,6 +41,8 @@
     <string name="form_title_hint">Título</string>
     <string name="form_subject_hint">Assunto</string>
     <string name="form_date_hint">Data</string>
+    <string name="form_start_date_hint">Data Inicial</string>
+    <string name="form_end_date_hint">Data Final</string>
     <string name="form_time_hint">Horário</string>
     <string name="form_state_hint">Estado</string>
     <string name="form_cep_hint">CEP</string>
