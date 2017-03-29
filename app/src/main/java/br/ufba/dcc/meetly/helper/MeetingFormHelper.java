@@ -14,10 +14,6 @@ import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.models.MeetingModel;
 import br.ufba.dcc.meetly.models.UserModel;
 
-/**
- * Created by StormTrooper on 3/27/2017.
- */
-
 public class MeetingFormHelper
 {
     private View view;
@@ -27,6 +23,16 @@ public class MeetingFormHelper
     private TextView date;
     private TextView time;
     private Spinner state;
+
+    private EditText cep;
+    private EditText city;
+    private EditText address;
+    private EditText neighborhood;
+    private EditText number;
+    private EditText complement;
+    private EditText room;
+    private EditText floor;
+
 
     public MeetingFormHelper(View view)
     {
@@ -43,6 +49,16 @@ public class MeetingFormHelper
         time = (TextView) view.findViewById(R.id.meeting_time);
         state = (Spinner) view.findViewById(R.id.meeting_state);
 
+        cep = (EditText) view.findViewById(R.id.meeting_cep);
+        city = (EditText) view.findViewById(R.id.meeting_city);
+        address = (EditText) view.findViewById(R.id.meeting_address_name);
+        neighborhood = (EditText) view.findViewById(R.id.meeting_address_neighborhood);
+        complement = (EditText) view.findViewById(R.id.meeting_address_complement);
+        number = (EditText) view.findViewById(R.id.meeting_address_number);
+        room = (EditText) view.findViewById(R.id.meeting_room);
+        floor = (EditText) view.findViewById(R.id.meeting_floor);
+
+
         state = (Spinner) view.findViewById(R.id.meeting_state);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.form_states, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -57,6 +73,17 @@ public class MeetingFormHelper
         meeting.setSubject(subject.getText().toString());
         meeting.setDate(date.getText().toString());
         meeting.setTime(time.getText().toString());
+
+        meeting.setAddressCep(cep.getText().toString());
+        meeting.setAddressState(state.getSelectedItem().toString());
+        meeting.setAddressCity(city.getText().toString());
+        meeting.setAddressName(address.getText().toString());
+        meeting.setAddressNeighborhood(neighborhood.getText().toString());
+        meeting.setAddressComplement(complement.getText().toString());
+        meeting.setAddressNumber(number.getText().toString());
+        meeting.setRoom(room.getText().toString());
+        meeting.setFloor(floor.getText().toString());
+
         return meeting;
     }
 
@@ -66,11 +93,78 @@ public class MeetingFormHelper
         subject.setText(meeting.getSubject());
         date.setText(meeting.getDate());
         time.setText(meeting.getTime());
+
+        // TODO
+        // falta setar o spinner.
+
+        cep.setText(meeting.getAddressCep());
+        city.setText(meeting.getAddressCity());
+        address.setText(meeting.getAddressName());
+        neighborhood.setText(meeting.getAddressNeighborhood());
+        complement.setText(meeting.getAddressComplement());
+        number.setText(meeting.getAddressNumber());
+        room.setText(meeting.getRoom());
+        floor.setText(meeting.getFloor());
     }
 
     public boolean validateForm(boolean newMeeting)
     {
         boolean validation = true;
+        String CEP_REGEXP = "^\\d{5}(-)?\\d{3}$";
+        String TIME_REGEXP = "^\\d{2}[:]\\d{2}$";
+
+        if(GenericValidator.isBlankOrNull(title.getText().toString())) {
+            title.setError("Título é obrigatório");
+            validation = false;
+        } else if(!ValidationHelper.genericSize(context, title.getText().toString())) {
+            title.setError("Título inválido");
+            validation = false;
+        }
+
+        if(GenericValidator.isBlankOrNull(subject.getText().toString())) {
+            subject.setError("Assunto é obrigatório");
+            validation = false;
+        }
+
+        if(GenericValidator.isBlankOrNull(date.getText().toString())) {
+            date.setError("Data é obrigatório");
+            validation = false;
+        } else if(!ValidationHelper.date(context, date.getText().toString())) {
+            date.setError("Data inválido");
+            validation = false;
+        }
+
+        if (GenericValidator.isBlankOrNull(cep.getText().toString())) {
+            cep.setError("Cep é obrigatório");
+            validation = false;
+        } else if (!ValidationHelper.cep(context, cep.getText().toString())) {
+            cep.setError("Cep inválido");
+        }
+
+        if (GenericValidator.isBlankOrNull(time.getText().toString())) {
+            time.setError("Horário é obrigatório");
+            validation = false;
+        } else if (!ValidationHelper.time(context, time.getText().toString())) {
+            time.setError("Horário inválido");
+        }
+
+        if(GenericValidator.isBlankOrNull(city.getText().toString())) {
+            city.setError("Cidade é obrigatório");
+            validation = false;
+        } else if(!ValidationHelper.genericSize(context, city.getText().toString())) {
+            city.setError("Cidade inválida");
+            validation = false;
+        }
+
+        if(GenericValidator.isBlankOrNull(address.getText().toString())) {
+            address.setError("Endereço é obrigatório");
+            validation = false;
+        } else if(!ValidationHelper.genericSize(context, address.getText().toString())) {
+            address.setError("Endereço inválido");
+            validation = false;
+        }
+
+
 
         return validation;
     }
