@@ -102,6 +102,7 @@ public class MeetingFormHelper
     {
         return guest.getText().toString();
     }
+    public void setGuestEmail(String email) { guest.setText(email);}
 
     public void setMeeting(MeetingModel meeting)
     {

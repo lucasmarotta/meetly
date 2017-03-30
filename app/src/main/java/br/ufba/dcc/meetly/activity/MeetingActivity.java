@@ -66,6 +66,7 @@ public class MeetingActivity extends AppCompatActivity {
             if(meeting != null) {
 
                 boolean viewOnly = false;
+
                 System.out.println(meeting.getUserId());
                 System.out.println(session.getSessionUser().getId());
 
@@ -74,6 +75,7 @@ public class MeetingActivity extends AppCompatActivity {
                     viewOnly = true;
                 }
                 meetingFormHelper.setMeeting(meeting,viewOnly);
+
             }
         }
 
@@ -99,24 +101,42 @@ public class MeetingActivity extends AppCompatActivity {
 
         if(meetingFormHelper.validateForm(newMeeting))
         {
+            String guestEmail = meetingFormHelper.getGuestEmail();
+            UserModel guest = null;
+
+            if(guestEmail != null && !guestEmail.trim().isEmpty()) {
+                guest = userDAO.getUserByEmail(guestEmail);
+            }
+
             if (newMeeting) {
                 meeting = meetingFormHelper.getMeeting();
                 meeting.setUserId(user.getId());
 
-                String guestEmail = meetingFormHelper.getGuestEmail();
-
-                if(guestEmail != null && !guestEmail.trim().isEmpty()) {
-                    UserModel guest = userDAO.getUserByEmail(guestEmail);
-
-                    if (guest != null && guest.getId() != user.getId()) {
-                        meeting.setGuestId(guest.getId());
-                    }
+                if (guest != null && guest.getId() != user.getId()) {
+                    meeting.setGuestId(guest.getId());
                 }
 
                 if (meetingDAO.store(meeting)) {
                     Toast.makeText(this, "Reunião Casdastrada!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Não foi possível cadastrar a reunião. Tente mais tarde", Toast.LENGTH_SHORT).show();
+                }
+                Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                Integer id = meeting.getId();
+                meeting = meetingFormHelper.getMeeting();
+                meeting.setId(id);
+                meeting.setUserId(user.getId());
+
+                if (guest != null && guest.getId() != user.getId()) {
+                    meeting.setGuestId(guest.getId());
+                }
+
+                if (meetingDAO.update(meeting)) {
+                    Toast.makeText(this, "Reunião atualizado!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Erro ao atualizar a reunião. Tente mais tarde", Toast.LENGTH_SHORT).show();
                 }
                 Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
                 startActivity(intent);
