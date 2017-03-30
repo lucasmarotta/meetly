@@ -275,7 +275,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             @Override
             public void onClick(View v)
             {
-
+                Intent intent = new Intent(viewHolder.getItemView().getContext(),MeetingActivity.class);
+                intent.putExtra("meeting",meeting);
+                viewHolder.getItemView().getContext().startActivity(intent);
             }
         });
     }

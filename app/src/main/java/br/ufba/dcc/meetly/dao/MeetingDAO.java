@@ -16,7 +16,7 @@ public class MeetingDAO extends BaseDAO
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime')" +
+            "m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime')\n" +
             "ORDER BY date, time";
 
     private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color\n" +
@@ -24,7 +24,7 @@ public class MeetingDAO extends BaseDAO
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime')" +
+            "m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime')\n" +
             "ORDER BY date DESC, time DESC";
 
     private static final String GET_ACTIVE_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color\n" +
@@ -32,7 +32,8 @@ public class MeetingDAO extends BaseDAO
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP, 'localtime')" +
+            "m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime') AND\n" +
+            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP, 'localtime')\n" +
             "ORDER BY date, time";
 
     private static final String GET_ARCHIVED_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color\n" +
@@ -40,8 +41,9 @@ public class MeetingDAO extends BaseDAO
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP, 'localtime')" +
-            "ORDER BY date, time";
+            "m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime') AND\n" +
+            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP, 'localtime')\n" +
+            "ORDER BY date DESC, time DESC";
 
 
     public MeetingDAO(Context context)
@@ -150,7 +152,7 @@ public class MeetingDAO extends BaseDAO
     public ArrayList<MeetingModel> getArchivedMeetingsFromToday(UserModel user)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.rawQuery(GET_ARCHIVED_MEETINGS_FROM_TODAY,null);
+        Cursor c = db.rawQuery(GET_ARCHIVED_MEETINGS_FROM_TODAY,new String[] {String.valueOf(user.getId()), String.valueOf(user.getId())});
         ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
         while(c.moveToNext())
         {
