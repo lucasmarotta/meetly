@@ -24,6 +24,7 @@ import br.ufba.dcc.meetly.activity.MainActivity;
 import br.ufba.dcc.meetly.dao.MeetingDAO;
 import br.ufba.dcc.meetly.helper.SessionHelper;
 import br.ufba.dcc.meetly.models.MeetingModel;
+import br.ufba.dcc.meetly.models.UserModel;
 import br.ufba.dcc.meetly.utils.MeetingAdapter;
 
 public class HomeFragment extends android.support.v4.app.Fragment
@@ -31,6 +32,7 @@ public class HomeFragment extends android.support.v4.app.Fragment
     private View mHomeView;
     private Context context;
     private SessionHelper session;
+    private UserModel sessionUser;
     private MainActivity mainActivity;
     private RecyclerView mRecyclerView;
     private MeetingAdapter mAdapter;
@@ -61,12 +63,13 @@ public class HomeFragment extends android.support.v4.app.Fragment
         mainActivity.setTitle(getResources().getString(R.string.title_activity_home));
         meetingDAO = new MeetingDAO(context);
         session = new SessionHelper(context);
+        sessionUser = session.getSessionUser();
 
         mRecyclerView = (RecyclerView) mHomeView.findViewById(R.id.home_meeting_list);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<MeetingModel> meetingItems = meetingDAO.getActiveMeetings(session.getSessionUser());
+        ArrayList<MeetingModel> meetingItems = meetingDAO.getActiveMeetings(sessionUser);
         mAdapter = new MeetingAdapter(context, meetingItems);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -95,7 +98,7 @@ public class HomeFragment extends android.support.v4.app.Fragment
             }
             case R.id.action_menu_refresh:
             {
-                mAdapter.updateItems(meetingDAO.getActiveMeetings(session.getSessionUser()));
+                mAdapter.updateItems(meetingDAO.getActiveMeetings(sessionUser));
                 break;
             }
             case R.id.action_menu_settings:
@@ -138,13 +141,13 @@ public class HomeFragment extends android.support.v4.app.Fragment
                 {
                     case "Todas as Datas":
                     {
-                        mAdapter.updateItems(meetingDAO.getActiveMeetings());
+                        mAdapter.updateItems(meetingDAO.getActiveMeetings(sessionUser));
                         break;
                     }
 
                     case "Hoje":
                     {
-                        mAdapter.updateItems(meetingDAO.getActiveMeetingFromToday());
+                        mAdapter.updateItems(meetingDAO.getActiveMeetingsFromToday(sessionUser));
                         break;
                     }
                 }
@@ -161,7 +164,7 @@ public class HomeFragment extends android.support.v4.app.Fragment
     }
 
     //Remover depois, só pra testar
-    private ArrayList<MeetingModel> simulateMeetings()
+    /*private ArrayList<MeetingModel> simulateMeetings()
     {
         ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
         MeetingModel m = new MeetingModel();
@@ -228,5 +231,5 @@ public class HomeFragment extends android.support.v4.app.Fragment
         m.setUserId(2);
         meetingItems.add(m);
         return meetingItems;
-    }
+    }*/
 }
