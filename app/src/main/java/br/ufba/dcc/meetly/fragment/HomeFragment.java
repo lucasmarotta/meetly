@@ -62,6 +62,7 @@ public class HomeFragment extends android.support.v4.app.Fragment
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         ArrayList<MeetingModel> meetingItems = meetingDAO.getActiveMeetings();
+        meetingItems.addAll(simulateMeetings());
         mAdapter = new MeetingAdapter(context, meetingItems);
         mRecyclerView.setAdapter(mAdapter);
 

@@ -55,6 +55,24 @@ public class MeetingActivity extends AppCompatActivity {
         meetingFormHelper = new MeetingFormHelper(rootView);
         meetingDAO = new MeetingDAO(this);
 
+        Intent intent = getIntent();
+        if(intent != null)
+        {
+            meeting = (MeetingModel) intent.getSerializableExtra("meeting");
+            if(meeting != null) {
+
+                boolean viewOnly = false;
+                System.out.println(meeting.getUserId());
+                System.out.println(session.getSessionUser().getId());
+
+                if(!session.getSessionUser().getId().equals(meeting.getUserId())) {
+                    setTitle(getResources().getString(R.string.title_activity_view_meeting));
+                    viewOnly = true;
+                }
+                meetingFormHelper.setMeeting(meeting,viewOnly);
+            }
+        }
+
         initDatePicker();
         timeView = (TextView) findViewById(R.id.meeting_time);
     }
@@ -63,7 +81,9 @@ public class MeetingActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_options_meeting, menu);
+        if(meeting == null || session.getSessionUser().getId().equals(meeting.getUserId())) {
+            getMenuInflater().inflate(R.menu.menu_options_meeting, menu);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -22,7 +22,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -34,6 +36,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.ufba.dcc.meetly.R;
+import br.ufba.dcc.meetly.activity.MeetingActivity;
+import br.ufba.dcc.meetly.dao.MeetingDAO;
 import br.ufba.dcc.meetly.helper.SessionHelper;
 import br.ufba.dcc.meetly.models.MeetingModel;
 import br.ufba.dcc.meetly.models.UserModel;
@@ -46,12 +50,13 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     private SessionHelper session;
     private Context context;
     private int lastPosition = -1;
+    private int position;
 
 
     /**
      * Meeting Item View Holder. Load the elements of the item.
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener
     {
         private View itemView;
         private ImageView itemTag;
@@ -65,6 +70,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         {
             super(view);
             itemView = view;
+            view.setOnCreateContextMenuListener(this);
             setElements();
         }
 
@@ -112,6 +118,67 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         {
             return itemView;
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+        {
+            final RecyclerView recyclerView  = (RecyclerView) v.getRootView().findViewById(R.id.home_meeting_list);
+            final MeetingAdapter adapter = (MeetingAdapter) recyclerView.getAdapter();
+            final MeetingModel meeting =  adapter.getItemByPosition(getAdapterPosition());
+            final UserModel sessionUser = adapter.getSession().getSessionUser();
+
+            MenuItem menuItem = menu.add("Ver Local");
+            menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item)
+                {
+                    String mapLocation = "Brasil, "+meeting.getAddressState()+", "+meeting.getAddressCity()+", "+meeting.getAddressName();
+
+                    if(meeting.getAddressNumber() != null) {
+                        mapLocation = mapLocation+", "+meeting.getAddressNumber();
+                    }
+
+                    if(meeting.getAddressCep() != null) {
+                        mapLocation = mapLocation+", CEP "+meeting.getAddressCep();
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q="+mapLocation));
+                    itemView.getContext().startActivity(intent);
+
+                    return false;
+                }
+            });
+
+            menuItem = menu.add("Visualizar");
+            menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item)
+                {
+                    Intent intent = new Intent(itemView.getContext(),MeetingActivity.class);
+                    intent.putExtra("meeting",meeting);
+                    itemView.getContext().startActivity(intent);
+                    return false;
+                }
+            });
+
+            if(sessionUser.getId() == meeting.getUserId())
+            {
+                menuItem = menu.add("Excluir");
+                menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
+                {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                        MeetingDAO meetingDAO = new MeetingDAO(itemView.getContext());
+                        if(meetingDAO.delete(meeting))
+                        {
+                            adapter.removeItem(getAdapterPosition());
+                        }
+                        return false;
+                    }
+                });
+            }
+        }
     }
 
     /**
@@ -156,7 +223,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         viewHolder.getItemDate().setText(meeting.getDateBySqlDate());
         viewHolder.getItemTime().setText(meeting.getTime());
 
-        if(meeting.getUserId() == user.getId()) {
+        if(meeting.getUserId().intValue() == user.getId().intValue()) {
             viewHolder.getItemShared().setVisibility(View.INVISIBLE);
         } else {
             viewHolder.getItemShared().setVisibility(View.VISIBLE);
@@ -248,5 +315,23 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
+    }
+
+    public SessionHelper getSession()
+    {
+        return session;
+    }
+
+    public MeetingModel getItemByPosition(int position)
+    {
+        return meetingItems.get(position);
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

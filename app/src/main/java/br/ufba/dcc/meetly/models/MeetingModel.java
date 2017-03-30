@@ -3,10 +3,11 @@ package br.ufba.dcc.meetly.models;
 import android.content.ContentValues;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MeetingModel extends BaseModel
+public class MeetingModel extends BaseModel implements Serializable
 {
     private static final String TAG = MeetingModel.class.getSimpleName();
     private Integer id;
