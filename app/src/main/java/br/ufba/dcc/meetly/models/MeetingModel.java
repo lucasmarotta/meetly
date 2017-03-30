@@ -11,6 +11,7 @@ public class MeetingModel extends BaseModel
     private static final String TAG = MeetingModel.class.getSimpleName();
     private Integer id;
     private Integer userId;
+    private Integer guestId;
     private String title;
     private String date;
     private String time;
@@ -46,6 +47,16 @@ public class MeetingModel extends BaseModel
     public void setUserId(Integer userId)
     {
         this.userId = userId;
+    }
+
+    public Integer getGuestId()
+    {
+        return guestId;
+    }
+
+    public void setGuestId(Integer guestId)
+    {
+        this.guestId = guestId;
     }
 
     public String getTitle()
@@ -247,6 +258,7 @@ public class MeetingModel extends BaseModel
         values.put("floor",floor);
         values.put("subject",subject);
         values.put("user_id",userId);
+        values.put("guest_id", guestId);
         return values;
     }
 
@@ -255,6 +267,7 @@ public class MeetingModel extends BaseModel
         return "MeetingModel{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", guestId=" + guestId +
                 ", title='" + title + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +

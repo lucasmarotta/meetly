@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.dao.MeetingDAO;
+import br.ufba.dcc.meetly.dao.UserDAO;
 import br.ufba.dcc.meetly.helper.MeetingFormHelper;
 import br.ufba.dcc.meetly.helper.SessionHelper;
 import br.ufba.dcc.meetly.models.MeetingModel;
@@ -33,6 +35,7 @@ public class MeetingActivity extends AppCompatActivity {
     private View rootView;
     private MeetingFormHelper meetingFormHelper;
     private MeetingDAO meetingDAO;
+    private UserDAO userDAO;
 
     // Datepicker
     private DatePicker datePicker;
@@ -54,6 +57,7 @@ public class MeetingActivity extends AppCompatActivity {
         rootView = findViewById(R.id.activity_meeting);
         meetingFormHelper = new MeetingFormHelper(rootView);
         meetingDAO = new MeetingDAO(this);
+        userDAO = new UserDAO(this);
 
         initDatePicker();
         timeView = (TextView) findViewById(R.id.meeting_time);
@@ -70,6 +74,7 @@ public class MeetingActivity extends AppCompatActivity {
     public void saveMeetingAction(MenuItem item)
     {
         user = session.getSessionUser();
+
         boolean newMeeting = (meeting == null);
 
         if(meetingFormHelper.validateForm(newMeeting))
@@ -77,6 +82,17 @@ public class MeetingActivity extends AppCompatActivity {
             if (newMeeting) {
                 meeting = meetingFormHelper.getMeeting();
                 meeting.setUserId(user.getId());
+
+                String guestEmail = meetingFormHelper.getGuestEmail();
+
+                if(guestEmail != null && !guestEmail.trim().isEmpty()) {
+                    UserModel guest = userDAO.getUserByEmail(guestEmail);
+
+                    if (guest != null && guest.getId() != user.getId()) {
+                        meeting.setGuestId(guest.getId());
+                    }
+                }
+
                 if (meetingDAO.store(meeting)) {
                     Toast.makeText(this, "Reunião Casdastrada!", Toast.LENGTH_SHORT).show();
                 } else {

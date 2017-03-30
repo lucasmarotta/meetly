@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String SQL_CREATE_MEETING = "CREATE TABLE IF NOT EXISTS meeting(\n" +
             "\tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
             "\tuser_id INTEGER NOT NULL,\n" +
+            "\tguest_id INTEGER,\n" +
             "\ttitle TEXT NOT NULL,\n" +
             "\tsubject TEXT,\n" +
             "\tdate TEXT NOT NULL,\n" +

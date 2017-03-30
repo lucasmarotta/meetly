@@ -41,6 +41,7 @@
 
     <string name="form_title_hint">Título</string>
     <string name="form_subject_hint">Assunto</string>
+    <string name="form_guest_hint">Convidado (Opcional)</string>
     <string name="form_date_hint">Data</string>
     <string name="form_start_date_hint">Data Inicial</string>
     <string name="form_end_date_hint">Data Final</string>

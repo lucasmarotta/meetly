@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.activity.MainActivity;
 import br.ufba.dcc.meetly.dao.MeetingDAO;
+import br.ufba.dcc.meetly.helper.SessionHelper;
 import br.ufba.dcc.meetly.models.MeetingModel;
 import br.ufba.dcc.meetly.utils.MeetingAdapter;
 
@@ -27,6 +28,7 @@ public class ArchivedFragment extends android.support.v4.app.Fragment
 {
     private View mArchivedView;
     private Context context;
+    private SessionHelper session;
     private MainActivity mainActivity;
     private RecyclerView mRecyclerView;
     private MeetingAdapter mAdapter;
@@ -56,12 +58,13 @@ public class ArchivedFragment extends android.support.v4.app.Fragment
         context = mArchivedView.getContext();
         mainActivity.setTitle(getResources().getString(R.string.title_view_archived));
         meetingDAO = new MeetingDAO(context);
+        session = new SessionHelper(context);
 
         mRecyclerView = (RecyclerView) mArchivedView.findViewById(R.id.home_meeting_list);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<MeetingModel> meetingItems = meetingDAO.getArchivedMeetings();
+        ArrayList<MeetingModel> meetingItems = meetingDAO.getArchivedMeetings(session.getSessionUser());
         mAdapter = new MeetingAdapter(context, meetingItems);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -90,7 +93,7 @@ public class ArchivedFragment extends android.support.v4.app.Fragment
             }
             case R.id.action_menu_refresh:
             {
-                mAdapter.updateItems(meetingDAO.getArchivedMeetings());
+                mAdapter.updateItems(meetingDAO.getArchivedMeetings(session.getSessionUser()));
                 break;
             }
             case R.id.action_menu_settings:

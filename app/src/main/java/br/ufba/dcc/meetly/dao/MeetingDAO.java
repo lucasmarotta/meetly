@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import br.ufba.dcc.meetly.models.MeetingModel;
+import br.ufba.dcc.meetly.models.UserModel;
 
 public class MeetingDAO extends BaseDAO
 {
@@ -14,14 +15,16 @@ public class MeetingDAO extends BaseDAO
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
-            "WHERE m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
+            "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
+            "m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
             "ORDER BY date, time";
 
     private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
-            "WHERE m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
+            "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
+            "m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
             "ORDER BY date DESC, time DESC";
 
     public MeetingDAO(Context context)
@@ -29,10 +32,10 @@ public class MeetingDAO extends BaseDAO
         super(context);
     }
 
-    public ArrayList<MeetingModel> getActiveMeetings()
+    public ArrayList<MeetingModel> getActiveMeetings(UserModel user)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.rawQuery(GET_ACTIVE_MEETINGS,null);
+        Cursor c = db.rawQuery(GET_ACTIVE_MEETINGS, new String[] {String.valueOf(user.getId()), String.valueOf(user.getId())});
         ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
         while(c.moveToNext())
         {
@@ -43,10 +46,10 @@ public class MeetingDAO extends BaseDAO
         return meetingItems;
     }
 
-    public ArrayList<MeetingModel> getArchivedMeetings()
+    public ArrayList<MeetingModel> getArchivedMeetings(UserModel user)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.rawQuery(GET_ARCHIVED_MEETINGS,null);
+        Cursor c = db.rawQuery(GET_ARCHIVED_MEETINGS, new String[] {String.valueOf(user.getId()), String.valueOf(user.getId())});
         ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
         while(c.moveToNext())
         {

@@ -11,6 +11,7 @@ import org.apache.commons.validator.GenericValidator;
 
 import br.ufba.dcc.meetly.R;
 import br.ufba.dcc.meetly.models.MeetingModel;
+import br.ufba.dcc.meetly.models.UserModel;
 
 public class MeetingFormHelper
 {
@@ -18,6 +19,7 @@ public class MeetingFormHelper
     private Context context;
     private EditText title;
     private EditText subject;
+    private EditText guest;
     private TextView date;
     private TextView time;
     private Spinner state;
@@ -44,6 +46,7 @@ public class MeetingFormHelper
     {
         title = (EditText) formView.findViewById(R.id.meeting_title);
         subject = (EditText) formView.findViewById(R.id.meeting_subject);
+        guest = (EditText) formView.findViewById(R.id.meeting_guest);
         date = (TextView) formView.findViewById(R.id.meeting_date);
         time = (TextView) formView.findViewById(R.id.meeting_time);
         state = (Spinner) formView.findViewById(R.id.meeting_state);
@@ -93,6 +96,11 @@ public class MeetingFormHelper
         meeting.setFloor(floor.getText().toString());
 
         return meeting;
+    }
+
+    public String getGuestEmail()
+    {
+        return guest.getText().toString();
     }
 
     public void setMeeting(MeetingModel meeting)
