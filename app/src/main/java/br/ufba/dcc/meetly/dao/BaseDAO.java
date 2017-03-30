@@ -14,7 +14,7 @@ public abstract class BaseDAO
 {
     protected DatabaseHelper dbHelper;
     protected String tableName;
-    protected String SQL_GET_MODEL_BY_PRiMARY_KEY = "SELECT * FROM ? WHERE id = ?";
+    protected String SQL_GET_MODEL_BY_PRiMARY_KEY = "SELECT * FROM ?? WHERE id = ?";
 
     public BaseDAO(Context context)
     {
@@ -61,7 +61,7 @@ public abstract class BaseDAO
     public BaseModel getByPrimaryKey(Integer primaryKey)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.rawQuery(SQL_GET_MODEL_BY_PRiMARY_KEY,new String[] {String.valueOf(tableName),String.valueOf(primaryKey)});
+        Cursor c = db.rawQuery(String.valueOf(SQL_GET_MODEL_BY_PRiMARY_KEY).replace("??",tableName),new String[] {String.valueOf(primaryKey)});
         if(c.moveToFirst()) {
             return getModel(c);
         }

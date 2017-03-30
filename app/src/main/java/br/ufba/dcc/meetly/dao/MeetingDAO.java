@@ -180,6 +180,7 @@ public class MeetingDAO extends BaseDAO
         meeting.setRoom(c.getString(c.getColumnIndex("room")));
         meeting.setSubject(c.getString(c.getColumnIndex("subject")));
         meeting.setUserId(c.getInt(c.getColumnIndex("user_id")));
+        meeting.setGuestId(c.getInt(c.getColumnIndex("guest_id")));
         System.out.println(meeting);
         System.out.println(c.getString(c.getColumnIndex("d_now")));
         return meeting;

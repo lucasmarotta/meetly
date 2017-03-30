@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.apache.commons.validator.GenericValidator;
 
 import br.ufba.dcc.meetly.R;
+import br.ufba.dcc.meetly.dao.UserDAO;
 import br.ufba.dcc.meetly.models.MeetingModel;
 import br.ufba.dcc.meetly.models.UserModel;
 
@@ -127,6 +128,13 @@ public class MeetingFormHelper
         subject.setText(meeting.getSubject());
         date.setText(meeting.getDate());
         time.setText(meeting.getTime());
+
+        UserDAO userDAO = new UserDAO(context);
+        UserModel guestUser = (UserModel) userDAO.getByPrimaryKey(meeting.getGuestId());
+        if(guestUser != null) {
+            guest.setText(guestUser.getEmail());
+        }
+
         state.setSelection(stateAdapter.getPosition(meeting.getAddressState()));
         cep.setText(meeting.getAddressCep());
         city.setText(meeting.getAddressCity());
@@ -142,6 +150,7 @@ public class MeetingFormHelper
             subject.setEnabled(false);
             date.setEnabled(false);
             time.setEnabled(false);
+            guest.setEnabled(false);
             state.setEnabled(false);
             cep.setEnabled(false);
             city.setEnabled(false);

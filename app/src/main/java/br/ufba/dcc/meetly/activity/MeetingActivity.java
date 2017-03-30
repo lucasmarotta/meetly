@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,9 +66,6 @@ public class MeetingActivity extends AppCompatActivity {
 
                 boolean viewOnly = false;
 
-                System.out.println(meeting.getUserId());
-                System.out.println(session.getSessionUser().getId());
-
                 if(!session.getSessionUser().getId().equals(meeting.getUserId())) {
                     setTitle(getResources().getString(R.string.title_activity_view_meeting));
                     viewOnly = true;
@@ -112,7 +108,7 @@ public class MeetingActivity extends AppCompatActivity {
                 meeting = meetingFormHelper.getMeeting();
                 meeting.setUserId(user.getId());
 
-                if (guest != null && guest.getId() != user.getId()) {
+                if (guest != null && guest.getId().intValue() != user.getId().intValue()) {
                     meeting.setGuestId(guest.getId());
                 }
 
