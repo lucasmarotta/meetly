@@ -35,10 +35,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
             "\tsubject TEXT,\n" +
             "\tdate TEXT NOT NULL,\n" +
             "\ttime TEXT NOT NULL,\n" +
-            "\taddress_state TEXT,\n" +
-            "\taddress_city TEXT,\n" +
-            "\taddress_name TEXT,\n" +
-            "\taddress_cep TEXT,\n" +
+            "\taddress_state TEXT NOT NULL,\n" +
+            "\taddress_city TEXT NOT NULL,\n" +
+            "\taddress_name TEXT NOT NULL,\n" +
+            "\taddress_cep TEXT NOT NULL,\n" +
             "\taddress_neighborhood TEXT,\n" +
             "\taddress_number TEXT,\n" +
             "\taddress_complement TEXT,\n" +

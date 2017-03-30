@@ -120,6 +120,39 @@ public class MeetingFormHelper
         floor.setText(meeting.getFloor());
     }
 
+    public void setMeeting(MeetingModel meeting, boolean viewOnly)
+    {
+        title.setText(meeting.getTitle());
+        subject.setText(meeting.getSubject());
+        date.setText(meeting.getDate());
+        time.setText(meeting.getTime());
+        state.setSelection(stateAdapter.getPosition(meeting.getAddressState()));
+        cep.setText(meeting.getAddressCep());
+        city.setText(meeting.getAddressCity());
+        address.setText(meeting.getAddressName());
+        neighborhood.setText(meeting.getAddressNeighborhood());
+        complement.setText(meeting.getAddressComplement());
+        number.setText(meeting.getAddressNumber());
+        room.setText(meeting.getRoom());
+        floor.setText(meeting.getFloor());
+
+        if(viewOnly) {
+            title.setEnabled(false);
+            subject.setEnabled(false);
+            date.setEnabled(false);
+            time.setEnabled(false);
+            state.setEnabled(false);
+            cep.setEnabled(false);
+            city.setEnabled(false);
+            address.setEnabled(false);
+            neighborhood.setEnabled(false);
+            complement.setEnabled(false);
+            number.setEnabled(false);
+            room.setEnabled(false);
+            floor.setEnabled(false);
+        }
+    }
+
     public boolean validateForm(boolean newMeeting)
     {
         boolean validation = true;

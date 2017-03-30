@@ -28,6 +28,7 @@
     <string name="title_activity_home">Início</string>
     <string name="title_activity_profile">Perfil</string>
     <string name="title_activity_meeting">Criar Reunião</string>
+    <string name="title_activity_view_meeting">Visualizar Reunião</string>
     <string name="title_view_archived">Arquivadas</string>
 
     <!-- FORMS -->
