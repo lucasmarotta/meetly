@@ -11,36 +11,36 @@ import br.ufba.dcc.meetly.models.UserModel;
 
 public class MeetingDAO extends BaseDAO
 {
-    private static final String GET_ACTIVE_MEETINGS = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
+    private static final String GET_ACTIVE_MEETINGS = "SELECT m.*, t.color AS color\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
+            "m.date || ' ' || m.time >= strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime')" +
             "ORDER BY date, time";
 
-    private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
+    private static final String GET_ARCHIVED_MEETINGS = "SELECT m.*, t.color AS color\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
+            "m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP, 'localtime')" +
             "ORDER BY date DESC, time DESC";
 
-    private static final String GET_ACTIVE_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
+    private static final String GET_ACTIVE_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP)" +
+            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP, 'localtime')" +
             "ORDER BY date, time";
 
-    private static final String GET_ARCHIVED_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
+    private static final String GET_ARCHIVED_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color\n" +
             "FROM meeting AS m\n" +
             "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
             "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
             "WHERE (m.user_id = ? OR m.guest_id = ?) AND\n" +
-            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP)" +
+            "m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP, 'localtime')" +
             "ORDER BY date, time";
 
 
@@ -181,8 +181,7 @@ public class MeetingDAO extends BaseDAO
         meeting.setSubject(c.getString(c.getColumnIndex("subject")));
         meeting.setUserId(c.getInt(c.getColumnIndex("user_id")));
         meeting.setGuestId(c.getInt(c.getColumnIndex("guest_id")));
-        System.out.println(meeting);
-        System.out.println(c.getString(c.getColumnIndex("d_now")));
+        //System.out.println(meeting);
         return meeting;
     }
 }
