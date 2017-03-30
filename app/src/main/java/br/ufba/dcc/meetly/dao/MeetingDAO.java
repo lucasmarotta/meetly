@@ -27,6 +27,21 @@ public class MeetingDAO extends BaseDAO
             "m.date || ' ' || m.time < strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP)" +
             "ORDER BY date DESC, time DESC";
 
+    private static final String GET_ACTIVE_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
+            "FROM meeting AS m\n" +
+            "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
+            "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
+            "WHERE m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP)" +
+            "ORDER BY date, time";
+
+    private static final String GET_ARCHIVED_MEETINGS_FROM_TODAY = "SELECT m.*, t.color AS color, strftime('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP) d_now\n" +
+            "FROM meeting AS m\n" +
+            "LEFT JOIN user_meeting_tag AS umt ON m.user_id = umt.user_id AND m.id = umt.meeting_id\n" +
+            "LEFT JOIN tag AS t ON umt.tag_id = t.id\n" +
+            "WHERE m.date = strftime('%Y-%m-%d', CURRENT_TIMESTAMP)" +
+            "ORDER BY date, time";
+
+
     public MeetingDAO(Context context)
     {
         super(context);
@@ -49,7 +64,36 @@ public class MeetingDAO extends BaseDAO
     public ArrayList<MeetingModel> getArchivedMeetings(UserModel user)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery(GET_ACTIVE_MEETINGS_FROM_TODAY,null);
+        ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
+        while(c.moveToNext())
+        {
+            MeetingModel meeting = getModel(c);
+            meeting.setColor(c.getString(c.getColumnIndex("color")));
+            meetingItems.add(meeting);
+        }
+        return meetingItems;
+    }
+
+
+    public ArrayList<MeetingModel> getArchivedMeetings()
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery(GET_ARCHIVED_MEETINGS, new String[] {String.valueOf(user.getId()), String.valueOf(user.getId())});
+        ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
+        while(c.moveToNext())
+        {
+            MeetingModel meeting = getModel(c);
+            meeting.setColor(c.getString(c.getColumnIndex("color")));
+            meetingItems.add(meeting);
+        }
+        return meetingItems;
+    }
+
+    public ArrayList<MeetingModel> getArchivedMeetingsFromToday()
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery(GET_ARCHIVED_MEETINGS_FROM_TODAY,null);
         ArrayList<MeetingModel> meetingItems = new ArrayList<MeetingModel>();
         while(c.moveToNext())
         {

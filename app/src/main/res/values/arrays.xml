@@ -30,4 +30,9 @@
         <item>SE</item>
         <item>TO</item>
     </string-array>
+
+    <string-array name="form_date_filter">
+        <item>Todas as Datas</item>
+        <item>Hoje</item>
+    </string-array>
 </resources>

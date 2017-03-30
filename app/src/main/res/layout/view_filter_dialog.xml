@@ -10,8 +10,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/diaglo_daterange_title"
-        android:textSize="28sp"
+        android:text="@string/dialog_filter_title"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/md_blue_grey_800"
         android:layout_marginBottom="15dp"/>
@@ -20,6 +20,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginBottom="10dp">
 
         <ImageView
@@ -30,51 +31,46 @@
             android:onClick="setDate"
             app:srcCompat="@drawable/ic_calendar"/>
 
-        <TextView
-            android:id="@+id/dialog_start_date"
+        <Spinner
+            android:id="@+id/dialog_date_filter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:onClick="setDate"
             android:textSize="18sp"
             android:hint="@string/form_start_date_hint"/>
 
     </LinearLayout>
 
-    <!-- DATE -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:tint="@color/md_grey_700"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_calendar"/>
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp">
 
         <TextView
-            android:id="@+id/dialog_end_date"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:textSize="18sp"
-            android:hint="@string/form_end_date_hint"/>
+            android:id="@+id/dialog_filter_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:text="@string/dialog_filter_cancel"/>
+
+        <TextView
+            android:id="@+id/dialog_filter_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:text="@string/dialog_filter_ok"/>
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:textColor="@color/md_teal_900"
-        android:textSize="17sp"
-        android:text="@string/dialog_button_filter"/>
 
 
 </LinearLayout>

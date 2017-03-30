@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class ArchivedFragment extends android.support.v4.app.Fragment
     }
 
     /**
-     * Load Archived view to the fragment
+     * Load Home view to the fragment
      * @param inflater LayoutInflater object
      * @param container ViewGroup object
      * @param savedInstanceState Bundle object
@@ -56,7 +58,7 @@ public class ArchivedFragment extends android.support.v4.app.Fragment
         mArchivedView = inflater.inflate(R.layout.view_home, container, false);
         mainActivity = (MainActivity) getActivity();
         context = mArchivedView.getContext();
-        mainActivity.setTitle(getResources().getString(R.string.title_view_archived));
+        mainActivity.setTitle(getResources().getString(R.string.title_activity_home));
         meetingDAO = new MeetingDAO(context);
         session = new SessionHelper(context);
 
@@ -107,14 +109,48 @@ public class ArchivedFragment extends android.support.v4.app.Fragment
     private void showSettingsDialog()
     {
         final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.view_daterange_picker_dialog);
+        dialog.setContentView(R.layout.view_filter_dialog);
         dialog.setTitle("Defina um período");
 
-        TextView startDate = (TextView) dialog.findViewById(R.id.dialog_start_date);
-        TextView endDate = (TextView) dialog.findViewById(R.id.dialog_end_date);
+        final Spinner dateFilter = (Spinner) dialog.findViewById(R.id.dialog_date_filter);
+        ArrayAdapter<CharSequence> dateFilterAdapter = ArrayAdapter.createFromResource(context, R.array.form_date_filter, android.R.layout.simple_spinner_item);
+        dateFilterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dateFilter.setAdapter(dateFilterAdapter);
 
-        startDate.setText("Banana");
-        endDate.setText("Pijama");
+        TextView cancelText = (TextView) dialog.findViewById(R.id.dialog_filter_cancel);
+        cancelText.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        TextView okText = (TextView) dialog.findViewById(R.id.dialog_filter_ok);
+        okText.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String itemFilter = dateFilter.getSelectedItem().toString();
+                switch (itemFilter)
+                {
+                    case "Todas as Datas":
+                    {
+                        mAdapter.updateItems(meetingDAO.getArchivedMeetings());
+                        break;
+                    }
+
+                    case "Hoje":
+                    {
+                        mAdapter.updateItems(meetingDAO.getArchivedMeetingsFromToday());
+                        break;
+                    }
+                }
+                dialog.dismiss();
+            }
+        });
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
