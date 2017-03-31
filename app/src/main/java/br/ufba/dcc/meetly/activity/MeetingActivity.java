@@ -11,6 +11,7 @@ import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Interpolator;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -57,6 +58,13 @@ public class MeetingActivity extends AppCompatActivity {
         meetingFormHelper = new MeetingFormHelper(rootView);
         meetingDAO = new MeetingDAO(this);
         userDAO = new UserDAO(this);
+        dateView = (TextView) findViewById(R.id.meeting_date);
+        timeView = (TextView) findViewById(R.id.meeting_time);
+
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
 
         Intent intent = getIntent();
         if(intent != null)
@@ -72,11 +80,12 @@ public class MeetingActivity extends AppCompatActivity {
                 }
                 meetingFormHelper.setMeeting(meeting,viewOnly);
 
+            } else {
+                initDatePicker();
             }
+        } else {
+            initDatePicker();
         }
-
-        initDatePicker();
-        timeView = (TextView) findViewById(R.id.meeting_time);
     }
 
 
@@ -143,12 +152,6 @@ public class MeetingActivity extends AppCompatActivity {
     // DatePicker
     private void initDatePicker()
     {
-        dateView = (TextView) findViewById(R.id.meeting_date);
-        calendar = Calendar.getInstance();
-
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month + 1, day);
     }
 
@@ -161,6 +164,11 @@ public class MeetingActivity extends AppCompatActivity {
     @Override
     protected DatePickerDialog onCreateDialog(int id)
     {
+        String [] dateParts = dateView.getText().toString().split("/");
+        //day = Integer.parseInt(dateParts[0]);
+        //month = Integer.parseInt(dateParts[1]);
+        //year =  Integer.parseInt(dateParts[2]);
+
         if (id == 999) {
             return new DatePickerDialog(this,
                     myDateListener, year, month, day);

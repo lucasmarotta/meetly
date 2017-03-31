@@ -126,7 +126,7 @@ public class MeetingFormHelper
     {
         title.setText(meeting.getTitle());
         subject.setText(meeting.getSubject());
-        date.setText(meeting.getDate());
+        date.setText(meeting.getDateBySqlDate());
         time.setText(meeting.getTime());
 
         UserDAO userDAO = new UserDAO(context);
